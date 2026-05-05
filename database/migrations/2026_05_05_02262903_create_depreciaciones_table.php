@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('depreciaciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bien_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('bien_id')->constrained('bienes')->cascadeOnDelete();
             $table->date('fecha_calculo');
             $table->integer('periodo')->comment('Número de período de depreciación');
             $table->decimal('valor_inicial', 14, 2);

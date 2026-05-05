@@ -11,6 +11,8 @@ class Bien extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'bienes';
+
     protected $fillable = [
         'codigo_patrimonial', 'codigo_interno', 'nombre', 'descripcion',
         'marca', 'modelo', 'serial', 'color',

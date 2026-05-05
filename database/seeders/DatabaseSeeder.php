@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
-        CategoriaBien::create([
+        $catSillas = CategoriaBien::create([
             'nombre' => 'Sillas de Oficina',
             'codigo' => 'CAT-MOB-SILLA',
             'tipo' => 'mobiliario',
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
-        CategoriaBien::create([
+        $catEscritorios = CategoriaBien::create([
             'nombre' => 'Escritorios',
             'codigo' => 'CAT-MOB-ESC',
             'tipo' => 'mobiliario',
@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
-        CategoriaBien::create([
+        $catDesktop = CategoriaBien::create([
             'nombre' => 'Computadoras de Escritorio',
             'codigo' => 'CAT-COMP-DESK',
             'tipo' => 'equipo_computacion',
@@ -138,7 +138,7 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
-        CategoriaBien::create([
+        $catLaptops = CategoriaBien::create([
             'nombre' => 'Laptops',
             'codigo' => 'CAT-COMP-LAP',
             'tipo' => 'equipo_computacion',
@@ -147,7 +147,7 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
-        CategoriaBien::create([
+        $catImpresoras = CategoriaBien::create([
             'nombre' => 'Impresoras',
             'codigo' => 'CAT-COMP-IMP',
             'tipo' => 'equipo_computacion',
@@ -165,13 +165,22 @@ class DatabaseSeeder extends Seeder
             'depreciable' => true,
         ]);
 
+        $catOtro = CategoriaBien::create([
+            'nombre' => 'Otros equipos y enseres',
+            'codigo' => 'CAT-OTRO',
+            'tipo' => 'otro',
+            'categoria_padre_id' => $catMobiliario->id,
+            'vida_util_anios' => 5,
+            'depreciable' => true,
+        ]);
+
         // ─── Fabricantes ───
         $hp = Fabricante::create(['nombre' => 'HP Inc.', 'pais_origen' => 'Estados Unidos']);
         $lenovo = Fabricante::create(['nombre' => 'Lenovo', 'pais_origen' => 'China']);
         $deli = Fabricante::create(['nombre' => 'Dell Technologies', 'pais_origen' => 'Estados Unidos']);
         $epson = Fabricante::create(['nombre' => 'Epson', 'pais_origen' => 'Japón']);
         $toyota = Fabricante::create(['nombre' => 'Toyota', 'pais_origen' => 'Japón']);
-        Fabricante::create(['nombre' => 'Nacional (Venezuela)', 'pais_origen' => 'Venezuela']);
+        $fabricanteNacional = Fabricante::create(['nombre' => 'Nacional (Venezuela)', 'pais_origen' => 'Venezuela']);
 
         // ─── Custodios ───
         $custodio1 = Custodio::create([
@@ -222,7 +231,7 @@ class DatabaseSeeder extends Seeder
                 'modelo' => fake()->bothify('Model-####'),
                 'serial' => strtoupper(fake()->bothify('SN-####-????')),
                 'color' => 'Negro',
-                'categoria_id' => 7, // Laptops
+                'categoria_id' => $catLaptops->id,
                 'fabricante_id' => fake()->randomElement([$hp->id, $lenovo->id, $deli->id]),
                 'organo_id' => $ministerio->id,
                 'ubicacion_id' => $ubicacionCentral->id,
@@ -247,7 +256,7 @@ class DatabaseSeeder extends Seeder
                 'modelo' => fake()->bothify('OptiPlex ###'),
                 'serial' => strtoupper(fake()->bothify('SN-????-####')),
                 'color' => 'Gris/Plata',
-                'categoria_id' => 6, // Desktop
+                'categoria_id' => $catDesktop->id,
                 'fabricante_id' => $deli->id,
                 'organo_id' => $ministerio->id,
                 'ubicacion_id' => $ubicacionCentral->id,
@@ -271,7 +280,7 @@ class DatabaseSeeder extends Seeder
                 'modelo' => fake()->randomElement(['WorkForce Pro', 'EcoTank L15150']),
                 'serial' => strtoupper(fake()->bothify('EPS-####-????')),
                 'color' => 'Negro',
-                'categoria_id' => 8, // Impresoras
+                'categoria_id' => $catImpresoras->id,
                 'fabricante_id' => $epson->id,
                 'organo_id' => $ministerio->id,
                 'ubicacion_id' => $ubicacionCentral->id,
@@ -294,7 +303,7 @@ class DatabaseSeeder extends Seeder
                 'modelo' => 'Hilux 4x4',
                 'serial' => strtoupper(fake()->bothify('VIN-?????????????????')),
                 'color' => fake()->randomElement(['Blanco', 'Plateado', 'Azul']),
-                'categoria_id' => 9, // Camionetas
+                'categoria_id' => $catCamionetas->id,
                 'fabricante_id' => $toyota->id,
                 'organo_id' => $ministerio->id,
                 'ubicacion_id' => $ubicacionCentral->id,
@@ -322,8 +331,10 @@ class DatabaseSeeder extends Seeder
                 'marca' => fake()->randomElement(['Oficenter', 'Ofimax', 'Nacional']),
                 'modelo' => fake()->bothify('MOD-###'),
                 'color' => fake()->randomElement(['Café', 'Negro', 'Gris', 'Blanco']),
-                'categoria_id' => fake()->randomElement([1, 4, 5]), // mobiliario general, sillas, escritorios
-                'fabricante_id' => 6, // Nacional
+                'categoria_id' => fake()->randomElement([
+                    $catMobiliario->id, $catSillas->id, $catEscritorios->id,
+                ]),
+                'fabricante_id' => $fabricanteNacional->id,
                 'organo_id' => fake()->randomElement([$ministerio->id, $instituto->id]),
                 'ubicacion_id' => fake()->randomElement([
                     $ubicacionCentral->id, $ubicacionINAPRE->id, $ubicacionAlmacen->id
@@ -350,8 +361,8 @@ class DatabaseSeeder extends Seeder
                 'modelo' => fake()->bothify('MOD-####'),
                 'serial' => strtoupper(fake()->bothify('SN-####-????')),
                 'color' => fake()->randomElement(['Blanco', 'Negro', 'Plateado']),
-                'categoria_id' => 10, // otro
-                'fabricante_id' => fake()->randomElement([1, 2, 3]),
+                'categoria_id' => $catOtro->id,
+                'fabricante_id' => fake()->randomElement([$hp->id, $lenovo->id, $deli->id]),
                 'organo_id' => $instituto->id,
                 'ubicacion_id' => $ubicacionINAPRE->id,
                 'custodio_actual_id' => $custodio3->id,

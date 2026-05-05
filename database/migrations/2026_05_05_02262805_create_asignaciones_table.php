@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('asignaciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bien_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('bien_id')->constrained('bienes')->cascadeOnDelete();
             $table->foreignId('custodio_id')->constrained();
             $table->foreignId('organo_id')->constrained();
-            $table->foreignId('ubicacion_id')->nullable()->constrained();
+            $table->foreignId('ubicacion_id')->nullable()->constrained('ubicaciones');
             $table->enum('tipo', ['asignacion', 'transferencia', 'devolucion', 'reubicacion'])->default('asignacion');
             $table->date('fecha_asignacion');
             $table->date('fecha_devolucion')->nullable();

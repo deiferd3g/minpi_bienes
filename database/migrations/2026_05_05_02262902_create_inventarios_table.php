@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('codigo', 30)->unique();
             $table->string('nombre');
             $table->foreignId('organo_id')->constrained();
-            $table->foreignId('ubicacion_id')->nullable()->constrained();
+            $table->foreignId('ubicacion_id')->nullable()->constrained('ubicaciones');
             $table->enum('tipo', ['planificado', 'extraordinario', 'rotacion', 'cierre_anual', 'toma_fisica']);
             $table->enum('alcance', ['total', 'parcial', 'por_categoria', 'por_ubicacion'])->default('total');
             $table->date('fecha_inicio');

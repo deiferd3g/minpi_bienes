@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('detalles_inventario', function (Blueprint $table) {
             $table->id();
             $table->foreignId('inventario_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('bien_id')->constrained();
+            $table->foreignId('bien_id')->constrained('bienes');
             $table->enum('resultado', ['presente', 'ausente', 'danado', 'extraviado', 'traspasado', 'no_identificado'])->nullable();
             $table->string('codigo_alternativo', 50)->nullable()->comment('Código alternativo reportado en toma física');
             $table->decimal('valor_reportado', 14, 2)->nullable()->comment('Valor reportado en toma física');

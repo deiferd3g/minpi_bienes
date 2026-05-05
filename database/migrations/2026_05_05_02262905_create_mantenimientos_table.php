@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('mantenimientos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 30)->unique();
-            $table->foreignId('bien_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('bien_id')->constrained('bienes')->cascadeOnDelete();
             $table->enum('tipo', ['preventivo', 'correctivo', 'predictivo', 'emergencia']);
             $table->string('proveedor', 150)->nullable();
             $table->decimal('costo', 14, 2)->default(0);

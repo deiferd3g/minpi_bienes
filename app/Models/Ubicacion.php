@@ -11,6 +11,8 @@ class Ubicacion extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'ubicaciones';
+
     protected $fillable = [
         'organo_id', 'nombre', 'codigo', 'direccion',
         'ciudad', 'estado', 'pais', 'edificio',

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 30)->unique();
-            $table->foreignId('bien_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('bien_id')->constrained('bienes')->cascadeOnDelete();
             $table->foreignId('organo_origen_id')->constrained('organos');
             $table->foreignId('organo_destino_id')->constrained('organos');
             $table->foreignId('ubicacion_origen_id')->nullable()->constrained('ubicaciones');

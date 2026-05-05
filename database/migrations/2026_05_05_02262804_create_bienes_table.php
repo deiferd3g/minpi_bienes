@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('categoria_id')->constrained('categorias_bienes');
             $table->foreignId('fabricante_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('organo_id')->constrained();
-            $table->foreignId('ubicacion_id')->nullable()->constrained();
+            $table->foreignId('ubicacion_id')->nullable()->constrained('ubicaciones');
             $table->foreignId('custodio_actual_id')->nullable()->constrained('custodios')->nullOnDelete();
             $table->decimal('valor_original', 14, 2)->default(0);
             $table->decimal('valor_actual', 14, 2)->default(0);
